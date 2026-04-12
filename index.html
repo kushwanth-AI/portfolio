@@ -388,11 +388,15 @@ h1 {
   /* ── SCROLL BAR ── */
   .scroll-indicator { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--blue), var(--accent2)); z-index: 200; transition: width 0.1s linear; }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; }
+ /* ── RESPONSIVE ── */
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
   }
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
 
   .hero-inner {
     flex-direction: column-reverse;
@@ -402,46 +406,46 @@ h1 {
 
   .hero-avatar {
     order: -1;
-    position: relative; /* IMPORTANT for tags */
+    position: relative;
   }
 
-  /* Bigger avatar for mobile */
+  /* Avatar size (mobile optimized) */
   .avatar-ring {
-    width: 260px;
-    height: 260px;
+    width: 250px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .avatar-inner {
-    width: 230px;
-    height: 230px;
+    width: 210px;
+    height: 210px;
     border-radius: 50%;
     overflow: hidden;
   }
 
-  /* 🔥 Floating tags (adjust for mobile) */
+  /* 🔥 Floating tags (ONLY 2 TAGS NOW) */
   .avatar-tag {
-    font-size: 12px;
+    font-size: 11px;
     padding: 6px 10px;
   }
 
-  .tag-exp {
-    top: 5%;
-    right: -10px;
-  }
-
+  /* Right side (Projects) */
   .tag-projects {
-    bottom: 10%;
-    right: -15px;
+    right: -12px;
+    top: 45%;
+    transform: translateY(-50%);
   }
 
+  /* Bottom (Technologies) */
   .tag-tech {
-    bottom: -10px;
-    left: 10%;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
+  /* Text alignment */
   .hero-sub,
   .hero-stats {
     margin-left: auto;
@@ -473,9 +477,12 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
-  @media (max-width: 480px) {
-    .skills-grid { grid-template-columns: 1fr; }
+
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
+}
 </style>
 </head>
 <body>
@@ -514,9 +521,10 @@ h1 {
         <a href="#contact" class="btn-outline">Get in Touch</a>
       </div>
       <div class="hero-stats">
-        <div><div class="stat-num">3+</div><div class="stat-label">Years Exp.</div></div>
-        <div><div class="stat-num">4</div><div class="stat-label">AI Projects</div></div>
-        <div><div class="stat-num">12+</div><div class="stat-label">Technologies</div></div>
+        <div><div class="stat-num">4+</div><div 
+        class="stat-label">AI Projects</div></div>
+        <div><div class="stat-num">12+</div><div 
+        class="stat-label">Technologies</div></div>
       </div>
     </div>
     <div class="hero-avatar">
