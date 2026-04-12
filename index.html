@@ -189,19 +189,86 @@
     .about-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 768px) {
-    .hero-inner { flex-direction: column-reverse; text-align: center; align-items: center; }
-    .hero-avatar { order: -1; }
-    .avatar-ring { width: 180px; height: 180px; }
-    .avatar-inner { width: 160px; height: 160px; }
-    .hero-sub, .hero-stats { margin-left: auto; margin-right: auto; }
-    .hero-ctas { justify-content: center; }
-    .hero-stats { justify-content: center; }
-    .nav-links { display: none; }
-    .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
 
+  .hero-inner {
+    flex-direction: column-reverse;
+    text-align: center;
+    align-items: center;
   }
+
+  .hero-avatar {
+    order: -1;
+    position: relative; /* IMPORTANT for tags */
+  }
+
+  /* Bigger avatar for mobile */
+  .avatar-ring {
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-inner {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  /* 🔥 Floating tags (adjust for mobile) */
+  .avatar-tag {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .tag-exp {
+    top: 5%;
+    right: -10px;
+  }
+
+  .tag-projects {
+    bottom: 10%;
+    right: -15px;
+  }
+
+  .tag-tech {
+    bottom: -10px;
+    left: 10%;
+  }
+
+  .hero-sub,
+  .hero-stats {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-ctas {
+    justify-content: center;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
   @media (max-width: 480px) {
     .skills-grid { grid-template-columns: 1fr; }
   }
@@ -508,14 +575,14 @@
       <div class="edu-icon">🎓</div>
       <div class="edu-content">
         <div class="edu-degree">Diploma in Electrical Engineering</div>
-        <div class="edu-college">[Your Diploma College Name]</div>
-        <div class="edu-year">📅 2019 – 2021 · 📍 [Location]</div>
+        <div class="edu-college">Audisankara College of Engineering & Technology</div>
+        <div class="edu-year">📅 2019 – 2021 · 📍 Gudur, Andhra Pradesh</div>
 
         <div class="edu-tags">
           <span class="tag">Electrical Fundamentals</span>
-          <span class="tag">Circuit Design</span>
-          <span class="tag">Problem Solving</span>
-          <span class="tag">Core Engineering</span>
+          <span class="tag">Circuit Analysis</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">Embedded Systems</span>
         </div>
       </div>
     </div>
