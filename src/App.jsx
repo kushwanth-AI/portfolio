@@ -3,6 +3,7 @@ import {
   ArrowUpRight,
   BrainCircuit,
   BriefcaseBusiness,
+  CalendarDays,
   Code2,
   Database,
   GraduationCap,
@@ -12,6 +13,7 @@ import {
   Menu,
   MessageSquare,
   Moon,
+  Quote,
   Send,
   ShieldCheck,
   Sparkles,
@@ -25,6 +27,9 @@ const navItems = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Blogs', href: '#blogs' },
+  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'Gallery', href: '#gallery' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -150,6 +155,127 @@ const projects = [
     lines: ['w-88', 'w-56', 'w-72'],
   },
 ]
+
+const blogs = [
+  {
+    title: 'Designing Reliable Multi-Agent AI Workflows',
+    description:
+      'A practical look at how orchestration, memory, tools, and guardrails shape dependable AI agents for real users.',
+    category: 'AI',
+    date: 'May 12, 2026',
+  },
+  {
+    title: 'From APIs to Products: Lessons in FastAPI Delivery',
+    description:
+      'Notes from building clean backend services that connect LLM features with secure enterprise systems.',
+    category: 'Web Development',
+    date: 'Apr 28, 2026',
+  },
+  {
+    title: 'My Learning Journey Through RAG Systems',
+    description:
+      'How chunking, embeddings, retrieval quality, and evaluation changed the way I approach knowledge applications.',
+    category: 'Learning Journey',
+    date: 'Mar 17, 2026',
+  },
+]
+
+const testimonials = [
+  {
+    name: 'Priya Sharma',
+    role: 'Product Manager',
+    initials: 'PS',
+    text: 'Kushwanth brings a rare mix of AI depth and product thinking. He explains complex ideas clearly and moves quickly from prototype to usable solution.',
+  },
+  {
+    name: 'Rahul Mehta',
+    role: 'Senior Backend Engineer',
+    initials: 'RM',
+    text: 'His API work is thoughtful, reliable, and easy to integrate. He pays attention to edge cases while keeping the implementation clean.',
+  },
+  {
+    name: 'Ananya Reddy',
+    role: 'Data Analytics Lead',
+    initials: 'AR',
+    text: 'Kushwanth turns ambiguous business requirements into practical AI and analytics workflows that teams can actually use.',
+  },
+]
+
+const galleryItems = [
+  {
+    title: 'AI Workspace',
+    caption: 'Daily setup for planning agent workflows, APIs, and product notes.',
+    category: 'Workspace',
+    size: 'tile-tall',
+    image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'Model Experiments',
+    caption: 'Prompt tests, retrieval checks, and evaluation passes.',
+    category: 'Projects',
+    size: 'tile-wide',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80',
+  },
+  {
+    title: 'Healthcare AI Build',
+    caption: 'Conversational healthcare automation and patient journey systems.',
+    category: 'Projects',
+    size: 'tile-large',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1000&q=80',
+  },
+  {
+    title: 'Kushwanth',
+    caption: 'Personal portfolio photo placeholder.',
+    category: 'Workspace',
+    size: 'tile-tall',
+    image: kushwanthImage,
+  },
+  {
+    title: 'Backend Notes',
+    caption: 'FastAPI architecture, service boundaries, and integration planning.',
+    category: 'Workspace',
+    size: 'tile-medium',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'Analytics Dashboard',
+    caption: 'Data stories, reporting flows, and insight reviews.',
+    category: 'Projects',
+    size: 'tile-wide',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80',
+  },
+  {
+    title: 'Learning Milestone',
+    caption: 'Certification and continuous learning highlights.',
+    category: 'Certifications',
+    size: 'tile-medium',
+    image: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'Team Collaboration',
+    caption: 'Sprint planning, demos, and stakeholder discussions.',
+    category: 'Events',
+    size: 'tile-large',
+    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80',
+  },
+  {
+    title: 'Code Review',
+    caption: 'Quality checks before shipping production-ready AI features.',
+    category: 'Projects',
+    size: 'tile-medium',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    title: 'Conference Moment',
+    caption: 'Learning from builders and exploring new AI product ideas.',
+    category: 'Events',
+    size: 'tile-wide',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80',
+  },
+]
+
+const galleryFilters = ['All', 'Workspace', 'Projects', 'Certifications', 'Events']
+
 const experiences = [
   {
     company: 'Apollo Health and Lifestyle Limited (AHLL)',
@@ -260,14 +386,65 @@ function Tag({ children }) {
   return <span className="tag">{children}</span>
 }
 
+function BlogCard({ blog }) {
+  return (
+    <article className="blog-card reveal">
+      <div className="blog-meta">
+        <span>{blog.category}</span>
+        <small><CalendarDays size={14} /> {blog.date}</small>
+      </div>
+      <h3>{blog.title}</h3>
+      <p>{blog.description}</p>
+      <a className="read-more" href="#contact" aria-label={`Read more about ${blog.title}`}>
+        Read More
+        <ArrowUpRight size={16} />
+      </a>
+    </article>
+  )
+}
+
+function TestimonialCard({ testimonial }) {
+  return (
+    <article className="testimonial-card reveal">
+      <Quote className="quote-mark" size={28} />
+      <p>{testimonial.text}</p>
+      <div className="testimonial-person">
+        <span className="avatar-initials">{testimonial.initials}</span>
+        <span>
+          <strong>{testimonial.name}</strong>
+          <small>{testimonial.role}</small>
+        </span>
+      </div>
+    </article>
+  )
+}
+
+function GalleryCard({ item }) {
+  return (
+    <article className={`gallery-card reveal ${item.size}`}>
+      <img src={item.image} alt={item.title} />
+      <div className="gallery-content">
+        <span>{item.category}</span>
+        <h3>{item.title}</h3>
+        <p>{item.caption}</p>
+      </div>
+    </article>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'dark')
   const [activeSection, setActiveSection] = useState('about')
+  const [galleryFilter, setGalleryFilter] = useState('All')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const currentIcon = useMemo(() => (theme === 'dark' ? Sun : Moon), [theme])
   const ThemeIcon = currentIcon
+  const visibleGalleryItems = useMemo(
+    () => galleryItems.filter((item) => galleryFilter === 'All' || item.category === galleryFilter),
+    [galleryFilter],
+  )
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -364,10 +541,6 @@ function App() {
           >
             <ThemeIcon size={18} />
           </button>
-          <a className="nav-cta" href="mailto:kushwanthyantrapati5@gmail.com">
-            <Send size={16} />
-            Hire Me
-          </a>
           <button
             className="menu-button"
             type="button"
@@ -516,6 +689,53 @@ function App() {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section id="blogs" className="content-section">
+          <SectionHeader
+            eyebrow="Insights"
+            title="Blogs"
+            description="Short notes and practical lessons from building AI systems, web APIs, and project workflows."
+          />
+          <div className="blogs-grid">
+            {blogs.map((blog) => <BlogCard blog={blog} key={blog.title} />)}
+          </div>
+        </section>
+
+        <section id="testimonials" className="content-section">
+          <SectionHeader
+            eyebrow="Feedback"
+            title="Testimonials"
+            description="Sample feedback placeholders for collaborators, teammates, and stakeholders."
+          />
+          <div className="testimonials-grid">
+            {testimonials.map((testimonial) => (
+              <TestimonialCard testimonial={testimonial} key={testimonial.name} />
+            ))}
+          </div>
+        </section>
+
+        <section id="gallery" className="content-section">
+          <SectionHeader
+            eyebrow="Snapshots"
+            title="Gallery"
+            description="A photo-style wall for project work, workspace moments, events, and certification highlights."
+          />
+          <div className="gallery-filters reveal" aria-label="Gallery filters">
+            {galleryFilters.map((filter) => (
+              <button
+                className={galleryFilter === filter ? 'active' : ''}
+                type="button"
+                onClick={() => setGalleryFilter(filter)}
+                key={filter}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+          <div className="gallery-grid">
+            {visibleGalleryItems.map((item) => <GalleryCard item={item} key={item.title} />)}
           </div>
         </section>
 
