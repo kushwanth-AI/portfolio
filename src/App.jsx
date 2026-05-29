@@ -293,7 +293,7 @@ const experiences = [
     ],
   },
   {
-    company: 'COGNITIVE TECHWARE',
+    company: 'COGNITIVE TECHWARE Pvt. Ltd.',
     role: 'AI Engineer',
     type: 'Full-time',
     period: 'June 2024 - Mar 2026',
