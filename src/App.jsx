@@ -293,7 +293,7 @@ const experiences = [
     ],
   },
   {
-    company: 'IBM',
+    company: 'COGNITIVE TECHWARE',
     role: 'AI Engineer',
     type: 'Full-time',
     period: 'June 2024 - Mar 2026',
