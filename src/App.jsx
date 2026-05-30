@@ -22,6 +22,7 @@ import {
   X,
 } from 'lucide-react'
 import kushwanthImage from './assets/kushwanth.png'
+import AvatarBadge from './components/AvatarBadge'
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -515,7 +516,7 @@ function App() {
 
       <header className="navbar">
         <a className="brand" href="#hero" onClick={() => setMenuOpen(false)}>
-          
+          <AvatarBadge initials="KY" size={48} />
           <span>Kushwanth Yantrapati</span>
         </a>
 

@@ -1696,3 +1696,131 @@ footer span {
 
 
 
+
+
+/* ------------------------------------------------------------------
+   AvatarBadge — reusable circular avatar with glow + glassmorphism.
+   Used in the navbar brand (KY) and pairs visually with the
+   testimonial avatar-initials chips (PS / RM / AR).
+------------------------------------------------------------------ */
+.avatar-badge {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  color: #03111d;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  /* Glassmorphism — uses the page's cyan→mint accent palette so the badge
+     blends with the existing buttons, profile rings, and section accents. */
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.65), transparent 42%),
+    linear-gradient(135deg, rgba(125, 211, 252, 0.98) 0%, rgba(94, 234, 212, 0.95) 55%, rgba(52, 211, 153, 0.92) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.45),
+    0 0 22px rgba(125, 211, 252, 0.55),
+    0 12px 30px rgba(34, 211, 238, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -6px 14px rgba(2, 6, 23, 0.18);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  user-select: none;
+}
+
+/* Outer glowing ring — picks up the same cyan/mint accent for cohesion. */
+.avatar-badge::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.6), rgba(52, 211, 153, 0.55));
+  filter: blur(6px);
+  opacity: 0.55;
+  z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Subtle inner highlight for the glassmorphism feel. */
+.avatar-badge::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%);
+  pointer-events: none;
+}
+
+.avatar-badge__text {
+  position: relative;
+  z-index: 1;
+  color: #03111d;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Variant: alternative mint/cyan gradient with dark initials,
+   matching the existing testimonial avatar look. */
+.avatar-badge--mint {
+  color: #03111d;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.65), transparent 40%),
+    linear-gradient(135deg, var(--accent), var(--accent-soft));
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.35),
+    0 0 18px rgba(125, 211, 252, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.avatar-badge--mint .avatar-badge__text {
+  color: #03111d;
+  text-shadow: none;
+}
+
+/* Hover: scale 1.05 + brighter glow. */
+.avatar-badge:hover,
+.brand:hover .avatar-badge,
+.brand:focus-visible .avatar-badge {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.7),
+    0 0 32px rgba(125, 211, 252, 0.7),
+    0 16px 38px rgba(52, 211, 153, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -6px 14px rgba(2, 6, 23, 0.18);
+}
+
+.avatar-badge:hover::before,
+.brand:hover .avatar-badge::before {
+  opacity: 0.9;
+  filter: blur(9px);
+}
+
+/* Light-theme tuning. */
+[data-theme="light"] .avatar-badge {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(2, 132, 199, 0.25),
+    0 0 22px rgba(56, 189, 248, 0.45),
+    0 12px 28px rgba(20, 184, 166, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Brand alignment so the avatar and name sit on a clean baseline. */
+.brand {
+  align-items: center;
+}
+
+.brand .avatar-badge + span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.1;
+}
