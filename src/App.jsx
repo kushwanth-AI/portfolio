@@ -562,9 +562,9 @@ function App() {
               BUILDING MULTI-AGENT HEALTHCARE AI SYSTEMS
             </div>
             <div className="hero-pills">
-              <span><Sparkles size={15} /> AI Engineer</span>
-              <span><BrainCircuit size={15} /> LLM Systems</span>
-              <span><MapPin size={15} /> Hyderabad, India</span>
+              <span><Sparkles size={14} /> AI Engineer</span>
+              <span><BrainCircuit size={14} /> LLM Systems</span>
+              <span><MapPin size={14} /> Hyderabad, India</span>
             </div>
             <h1>
               Hi, I'm <span>Kushwanth</span>
