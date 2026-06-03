@@ -1,22 +1,30 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowUpRight,
+  BarChart3,
   BrainCircuit,
   BriefcaseBusiness,
   CalendarDays,
   Code2,
+  Cloud,
   Database,
+  FileCode2,
+  FileText,
   GraduationCap,
+  HeartPulse,
   Layers3,
   Mail,
   MapPin,
+  Navigation,
   Menu,
   MessageSquare,
   Moon,
-  MoreHorizontal,
   Quote,
+  Radio,
   Rocket,
+  Search,
   Send,
+  Server,
   ShieldCheck,
   Sparkles,
   Sun,
@@ -28,7 +36,6 @@ import {
   SiPython,
   SiFastapi,
   SiReact,
-  SiVite,
   SiLanggraph,
   SiLangchain,
   SiOpenai,
@@ -37,29 +44,27 @@ import {
   SiDocker,
   SiPostgresql,
   SiGithub,
+  SiRedis,
 } from 'react-icons/si'
 import { FaAws } from 'react-icons/fa6'
 import kushwanthImage from './assets/kushwanth.png'
 import AvatarBadge from './components/AvatarBadge'
 
-const primaryTech = [
+const technologies = [
   { name: 'Python', Icon: SiPython, color: '#FFD43B' },
   { name: 'FastAPI', Icon: SiFastapi, color: '#05B6A2' },
   { name: 'React', Icon: SiReact, color: '#61DAFB' },
-  { name: 'LangChain', Icon: SiLangchain, color: '#2ECC71' },
   { name: 'LangGraph', Icon: SiLanggraph, color: '#A78BFA' },
+  { name: 'LangChain', Icon: SiLangchain, color: '#2ECC71' },
   { name: 'PostgreSQL', Icon: SiPostgresql, color: '#5B9BD5' },
-]
-
-const extraTech = [
-  { name: 'Vite', Icon: SiVite, color: '#A259FF' },
   { name: 'OpenAI', Icon: SiOpenai, color: '#E5ECF6' },
-  { name: 'Claude', Icon: SiClaude, color: '#D97757' },
-  { name: 'ChatGPT', Icon: SiOpenai, color: '#74AA9C' },
-  { name: 'MCP', Icon: SiModelcontextprotocol, color: '#CBD7E8' },
+  { name: 'Anthropic', Icon: SiClaude, color: '#D97757' },
   { name: 'Docker', Icon: SiDocker, color: '#2496ED' },
   { name: 'GitHub', Icon: SiGithub, color: '#E5ECF6' },
   { name: 'AWS', Icon: FaAws, color: '#FF9900' },
+  { name: 'MCP', Icon: SiModelcontextprotocol, color: '#CBD7E8' },
+  { name: 'Vector DB', Icon: Database, color: '#00D4FF' },
+  { name: 'Redis', Icon: SiRedis, color: '#DC382D' },
 ]
 
 const navItems = [
@@ -151,6 +156,12 @@ const projects = [
       'Developing a production-grade multi-agent AI healthcare assistant for Apollo Hospitals managing the complete patient journey - from symptom understanding and doctor discovery to appointment booking, diagnostics, invoice generation, and payment processing. Architected a modular LangGraph orchestration layer with dedicated agents for intent parsing, RAG retrieval, doctor search, booking, memory management, queue workflows, and hospital guidance systems. Powered by GPT-4 with session-based conversational memory, QdrantDB RAG pipelines, OCR-based medical report analysis, and Sarvam AI multilingual voice interactions across English, Telugu, Hindi, Tamil, and Kannada.',
     stack: ['Live Project', 'Production AI', 'Multi-Agent AI', 'Healthcare AI', 'LangGraph', 'GPT-4', 'Apollo Hospitals', 'FastAPI', 'QdrantDB', 'Redis', 'PostgreSQL', 'Sarvam AI', 'React.js', 'Razorpay'],
     lines: ['w-92', 'w-88', 'w-78'],
+    visual: 'healthcare',
+    features: [
+      { icon: BrainCircuit, title: 'Multi-Agent Flow', text: 'Intent, booking, retrieval, and payment orchestration' },
+      { icon: ShieldCheck, title: 'Healthcare Ready', text: 'Secure workflow layer for patient journeys' },
+      { icon: Rocket, title: 'Production System', text: 'Live APIs, queues, memory, and automations' },
+    ],
   },
   {
     status: 'Completed',
@@ -162,6 +173,12 @@ const projects = [
       'Intelligent system that translates natural language into optimized SQL queries using knowledge graphs, allowing non-technical users to query complex enterprise databases without writing SQL. Integrates graph-based schema understanding with LLM reasoning for accurate, context-aware query generation.',
     stack: ['Python', 'LangGraph', 'Knowledge Graph', 'FastAPI', 'LLM', 'Neo4j', 'PostgreSQL'],
     lines: ['w-92', 'w-76', 'w-58'],
+    visual: 'sql',
+    features: [
+      { icon: Sparkles, title: 'Smart SQL Generation', text: 'Generate complex SQL using natural language' },
+      { icon: Layers3, title: 'Knowledge Graph', text: 'Graph-based schema understanding' },
+      { icon: ShieldCheck, title: 'Enterprise Ready', text: 'Secure, scalable, and production-grade' },
+    ],
   },
   {
     status: 'Completed',
@@ -172,6 +189,12 @@ const projects = [
       'Production-grade RAG pipeline enabling AI agents to retrieve and process information from enterprise knowledge bases using vector databases. Features optimized chunking strategies, hybrid search, and re-ranking for high-accuracy semantic retrieval at scale.',
     stack: ['RAG', 'LangChain', 'Pinecone', 'FAISS', 'Python', 'OpenAI', 'FastAPI'],
     lines: ['w-84', 'w-68', 'w-78'],
+    visual: 'rag',
+    features: [
+      { icon: Search, title: 'Intelligent Retrieval', text: 'Semantic search across enterprise data sources' },
+      { icon: BrainCircuit, title: 'AI Agent Ready', text: 'Built for autonomous AI agents' },
+      { icon: Server, title: 'Vector Database', text: 'Stacked retrieval and embedding pipeline' },
+    ],
   },
   {
     status: 'Completed',
@@ -182,6 +205,12 @@ const projects = [
       'Real-time monitoring platform for enterprise asset health tracking with AI-powered anomaly detection to predict failures before they occur, reducing downtime across critical infrastructure. Designed RESTful APIs for live sensor data ingestion and alert management.',
     stack: ['Python', 'FastAPI', 'Predictive Maintenance', 'K-means', 'Clustering', 'Anomaly Detection', 'PostgreSQL'],
     lines: ['w-72', 'w-88', 'w-52'],
+    visual: 'monitoring',
+    features: [
+      { icon: Database, title: 'Live Telemetry', text: 'Realtime asset health signals and alerts' },
+      { icon: BrainCircuit, title: 'Anomaly Detection', text: 'AI patterns for predictive maintenance' },
+      { icon: ShieldCheck, title: 'Risk Reduction', text: 'Detect issues before critical downtime' },
+    ],
   },
   {
     status: 'Completed',
@@ -192,6 +221,12 @@ const projects = [
       'Analyzed large-scale clinical datasets using Python by performing data cleaning and preprocessing with Pandas and NumPy. Conducted EDA to identify patterns and anomalies, and created visualizations using Matplotlib and Seaborn to generate actionable insights.',
     stack: ['Python', 'Pandas', 'Seaborn', 'SQL', 'NumPy', 'Excel', 'Matplotlib'],
     lines: ['w-88', 'w-56', 'w-72'],
+    visual: 'analytics',
+    features: [
+      { icon: Database, title: 'Data Pipeline', text: 'Clean, transform, and model enterprise data' },
+      { icon: Layers3, title: 'BI Dashboards', text: 'Clear reporting for business stakeholders' },
+      { icon: Sparkles, title: 'Insight Layer', text: 'Turn raw datasets into decisions' },
+    ],
   },
 ]
 
@@ -471,12 +506,192 @@ function GalleryCard({ item }) {
   )
 }
 
+function ProjectVisual({ type = 'agents' }) {
+  return (
+    <div className={`architecture-visual visual-${type}`} aria-hidden="true">
+      <div className="visual-grid" />
+      <div className="visual-glow glow-one" />
+      <div className="visual-glow glow-two" />
+
+      {type === 'healthcare' && (
+        <>
+          <div className="hospital-scene">
+            <span className="hospital-bed" />
+            <span className="hospital-window" />
+            <span className="hospital-cross"><HeartPulse size={22} /></span>
+          </div>
+          <div className="assistant-avatar">
+            <BrainCircuit size={42} />
+            <span className="avatar-eye eye-left" />
+            <span className="avatar-eye eye-right" />
+          </div>
+          <div className="chat-workflow">
+            <span>Symptoms</span>
+            <span>Doctor</span>
+            <span>Booking</span>
+          </div>
+          <i className="workflow-beam beam-one" />
+          <i className="workflow-beam beam-two" />
+        </>
+      )}
+
+      {type === 'indoor' && (
+        <>
+          <div className="floor-map">
+            <span className="map-room room-one" />
+            <span className="map-room room-two" />
+            <span className="map-room room-three" />
+            <i className="route-path" />
+            <span className="route-dot start-dot" />
+            <span className="route-dot destination-dot" />
+            <Navigation className="nav-arrow" size={34} />
+          </div>
+          <div className="nav-phone">
+            <strong>Floor 2</strong>
+            <small>20 m ahead</small>
+            <MapPin size={24} />
+          </div>
+        </>
+      )}
+
+      {type === 'ble' && (
+        <>
+          <div className="beacon-device">
+            <Radio size={54} />
+            <span />
+          </div>
+          <span className="signal-ring signal-one" />
+          <span className="signal-ring signal-two" />
+          <span className="signal-ring signal-three" />
+          <div className="ble-metrics">
+            <span>Realtime Tracking</span>
+            <span>Proximity Detection</span>
+            <span>Indoor Positioning</span>
+          </div>
+        </>
+      )}
+
+      {type === 'sql' && (
+        <>
+          <div className="ai-panel">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="db-cylinder">
+            <span className="db-top" />
+            <span className="db-ring ring-one" />
+            <span className="db-ring ring-two" />
+            <span className="db-ring ring-three" />
+          </div>
+          <div className="graph-network">
+            {[1, 2, 3, 4, 5, 6].map((node) => <span className={`graph-node node-${node}`} key={node} />)}
+            <i className="graph-edge edge-one" />
+            <i className="graph-edge edge-two" />
+            <i className="graph-edge edge-three" />
+            <i className="graph-edge edge-four" />
+          </div>
+        </>
+      )}
+
+      {type === 'rag' && (
+        <>
+          <div className="cloud-core">
+            <Cloud size={72} />
+            <Search className="cloud-search" size={42} />
+          </div>
+          <div className="rag-node doc-node"><FileText size={28} /></div>
+          <div className="rag-node code-node"><FileCode2 size={30} /></div>
+          <div className="rag-node chat-node"><MessageSquare size={28} /></div>
+          <div className="vector-stack">
+            <span />
+            <span />
+            <span />
+          </div>
+          <i className="flow-line line-left" />
+          <i className="flow-line line-center" />
+          <i className="flow-line line-right" />
+        </>
+      )}
+
+      {type === 'agents' && (
+        <>
+          <div className="agent-orbit">
+            <BrainCircuit size={58} />
+            <span className="orbit-node orbit-one" />
+            <span className="orbit-node orbit-two" />
+            <span className="orbit-node orbit-three" />
+            <span className="orbit-node orbit-four" />
+          </div>
+          <div className="agent-stack">
+            <span />
+            <span />
+            <span />
+          </div>
+        </>
+      )}
+
+      {type === 'monitoring' && (
+        <>
+          <div className="monitor-screen">
+            <span className="pulse-line" />
+            <span className="pulse-dot" />
+          </div>
+          <div className="sensor-cluster">
+            <span />
+            <span />
+            <span />
+          </div>
+        </>
+      )}
+
+      {type === 'analytics' && (
+        <>
+          <div className="analytics-board">
+            <span style={{ height: '42%' }} />
+            <span style={{ height: '68%' }} />
+            <span style={{ height: '54%' }} />
+            <span style={{ height: '84%' }} />
+          </div>
+          <div className="insight-card">
+            <BarChart3 size={28} />
+            <span />
+            <span />
+          </div>
+          <div className="kpi-row">
+            <span><strong>2.45M</strong><small>Revenue</small></span>
+            <span><strong>18.4K</strong><small>Patients</small></span>
+            <span><strong>4.8/5</strong><small>Score</small></span>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function FeatureStrip({ features = [] }) {
+  if (!features.length) return null
+
+  return (
+    <div className="project-feature-strip">
+      {features.map(({ icon: Icon, title, text }) => (
+        <div className="project-feature" key={title}>
+          <span><Icon size={22} /></span>
+          <div>
+            <strong>{title}</strong>
+            <small>{text}</small>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'dark')
   const [activeSection, setActiveSection] = useState('about')
   const [galleryFilter, setGalleryFilter] = useState('All')
-  const [techOpen, setTechOpen] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const currentIcon = useMemo(() => (theme === 'dark' ? Sun : Moon), [theme])
@@ -524,6 +739,77 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const projectSection = document.querySelector('.project-lab')
+    if (!projectSection) return undefined
+
+    let frame = 0
+    let visible = !document.hidden
+    const cursor = { x: 50, y: 50 }
+    const current = { x: 50, y: 50 }
+
+    function renderCursor() {
+      if (!visible) {
+        frame = 0
+        return
+      }
+
+      current.x += (cursor.x - current.x) * 0.14
+      current.y += (cursor.y - current.y) * 0.14
+      projectSection.style.setProperty('--cursor-x', `${current.x}%`)
+      projectSection.style.setProperty('--cursor-y', `${current.y}%`)
+      frame = requestAnimationFrame(renderCursor)
+    }
+
+    function moveCursor(event) {
+      const rect = projectSection.getBoundingClientRect()
+      cursor.x = ((event.clientX - rect.left) / rect.width) * 100
+      cursor.y = ((event.clientY - rect.top) / rect.height) * 100
+      if (!frame && visible) frame = requestAnimationFrame(renderCursor)
+    }
+
+    function toggleVisibility() {
+      visible = !document.hidden
+      if (visible && !frame) frame = requestAnimationFrame(renderCursor)
+      if (!visible && frame) {
+        cancelAnimationFrame(frame)
+        frame = 0
+      }
+    }
+
+    projectSection.addEventListener('pointermove', moveCursor)
+    document.addEventListener('visibilitychange', toggleVisibility)
+    frame = requestAnimationFrame(renderCursor)
+
+    return () => {
+      projectSection.removeEventListener('pointermove', moveCursor)
+      document.removeEventListener('visibilitychange', toggleVisibility)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  function tiltProjectCard(event) {
+    const card = event.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    const rotateY = ((x / rect.width) - 0.5) * 8
+    const rotateX = ((y / rect.height) - 0.5) * -8
+
+    card.style.setProperty('--tilt-x', `${rotateX.toFixed(2)}deg`)
+    card.style.setProperty('--tilt-y', `${rotateY.toFixed(2)}deg`)
+    card.style.setProperty('--shine-x', `${x}px`)
+    card.style.setProperty('--shine-y', `${y}px`)
+  }
+
+  function resetProjectCard(event) {
+    const card = event.currentTarget
+    card.style.setProperty('--tilt-x', '0deg')
+    card.style.setProperty('--tilt-y', '0deg')
+    card.style.setProperty('--shine-x', '50%')
+    card.style.setProperty('--shine-y', '50%')
+  }
+
   function updateForm(event) {
     const { name, value } = event.target
     setForm((current) => ({ ...current, [name]: value }))
@@ -548,10 +834,12 @@ function App() {
   return (
     <div className="site-shell">
       <div className="noise-layer" />
-      <div className="grid-layer" />
-      <div className="orb orb-one" />
-      <div className="orb orb-two" />
-      <div className="orb orb-three" />
+      <div className="stripe-gradient">
+        <span className="stripe-band band-one" />
+        <span className="stripe-band band-two" />
+        <span className="stripe-band band-three" />
+        <span className="stripe-band band-four" />
+      </div>
 
       <header className="navbar">
         <a className="brand" href="#hero" onClick={() => setMenuOpen(false)}>
@@ -619,60 +907,101 @@ function App() {
               </a>
             </div>
             <div className="hero-tech">
-              <span className="hero-tech-label">Trusted Technologies</span>
-              <div className="hero-tech-row">
-                {primaryTech.map(({ name, Icon, color }) => (
-                  <span
-                    className="tech-chip"
-                    key={name}
-                    title={name}
-                    aria-label={name}
-                    style={{ '--logo-color': color }}
-                  >
-                    <Icon className="tech-logo" aria-hidden="true" focusable="false" />
-                  </span>
-                ))}
+              <div className="hero-tech-heading">
+                <span className="hero-tech-label">Technologies Behind My AI Systems</span>
+              </div>
 
-                <div
-                  className="tech-more"
-                  onMouseEnter={() => setTechOpen(true)}
-                  onMouseLeave={() => setTechOpen(false)}
-                >
-                  <button
-                    type="button"
-                    className={`tech-chip tech-more-btn ${techOpen ? 'is-open' : ''}`}
-                    aria-label="Show more technologies"
-                    aria-expanded={techOpen}
-                    onClick={() => setTechOpen((open) => !open)}
-                  >
-                    <MoreHorizontal className="tech-logo" aria-hidden="true" focusable="false" />
-                  </button>
-
-                  <div className={`tech-popover ${techOpen ? 'is-open' : ''}`} role="menu">
-                    {extraTech.map(({ name, Icon, color }) => (
-                      <span
-                        className="tech-chip tech-chip-sm"
-                        key={name}
-                        title={name}
-                        aria-label={name}
-                        role="menuitem"
-                        style={{ '--logo-color': color }}
-                      >
-                        <Icon className="tech-logo" aria-hidden="true" focusable="false" />
-                      </span>
-                    ))}
-                  </div>
+              <div className="tech-showcase" aria-label="Powering Enterprise AI Solutions">
+                <span className="tech-particle particle-one" />
+                <span className="tech-particle particle-two" />
+                <span className="tech-network-line line-one" />
+                <span className="tech-network-line line-two" />
+                <div className="tech-marquee">
+                  {[...technologies, ...technologies].map(({ name, Icon, color }, index) => (
+                    <span
+                      className="tech-chip"
+                      key={`${name}-${index}`}
+                      title={name}
+                      aria-label={name}
+                      style={{ '--logo-color': color }}
+                    >
+                      <Icon className="tech-logo" aria-hidden="true" focusable="false" />
+                      <small>{name}</small>
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
           <div className="hero-visual reveal">
-            <div className="profile-card">
-              <div className="profile-rings">
-                <img src={kushwanthImage} alt="Kushwanth Yantrapati" />
-                <div className="floating-chip chip-top">4+ <span>AI Projects</span></div>
-                <div className="floating-chip chip-right">15+ <span>Technologies</span></div>
+            <div className="product-stack">
+              <div className="dashboard-card">
+                <div className="dashboard-top">
+                  <div>
+                    <span className="dashboard-kicker">ARIA Operations</span>
+                    <strong>Patient Journey Console</strong>
+                  </div>
+                  <span className="live-badge">Live</span>
+                </div>
+
+                <div className="metric-grid">
+                  <div className="metric-card main-metric">
+                    <span>Resolved intents</span>
+                    <strong>2,418</strong>
+                    <small>+31.8% this sprint</small>
+                  </div>
+                  <div className="metric-card">
+                    <span>RAG accuracy</span>
+                    <strong>94%</strong>
+                    <small>Qdrant + GPT-4</small>
+                  </div>
+                </div>
+
+                <div className="chart-panel" aria-hidden="true">
+                  <span style={{ height: '44%' }} />
+                  <span style={{ height: '64%' }} />
+                  <span style={{ height: '52%' }} />
+                  <span style={{ height: '78%' }} />
+                  <span style={{ height: '58%' }} />
+                  <span style={{ height: '88%' }} />
+                  <span style={{ height: '72%' }} />
+                </div>
+
+                <div className="workflow-list">
+                  {['Symptom understanding', 'Doctor discovery', 'Booking workflow'].map((item) => (
+                    <div className="workflow-item" key={item}>
+                      <span />
+                      <p>{item}</p>
+                      <small>Ready</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="checkout-card">
+                <div className="checkout-profile">
+                  <img src={kushwanthImage} alt="Kushwanth Yantrapati" />
+                  <span>
+                    <strong>Kushwanth</strong>
+                    <small>AI Solutions Engineer</small>
+                  </span>
+                </div>
+                <div className="checkout-line">
+                  <span>LangGraph agents</span>
+                  <strong>12</strong>
+                </div>
+                <div className="checkout-line">
+                  <span>APIs shipped</span>
+                  <strong>25+</strong>
+                </div>
+                <a href="#contact">Contact</a>
+              </div>
+
+              <div className="terminal-card">
+                <div className="terminal-dots"><span /><span /><span /></div>
+                <code>agent.invoke({'{'}workflow: 'healthcare'{'}'})</code>
+                <p>routing {'->'} retrieval {'->'} booking {'->'} payment</p>
               </div>
             </div>
           </div>
@@ -756,7 +1085,21 @@ function App() {
           </div>
         </section>
 
-        <section id="projects" className="content-section">
+        <section id="projects" className="content-section project-lab">
+          <div className="project-mesh" aria-hidden="true">
+            <span className="mesh-node node-a" />
+            <span className="mesh-node node-b" />
+            <span className="mesh-node node-c" />
+            <span className="mesh-node node-d" />
+            <span className="mesh-link link-a" />
+            <span className="mesh-link link-b" />
+            <span className="mesh-link link-c" />
+          </div>
+          <div className="project-workflow" aria-hidden="true">
+            {['User', 'Apollo ARIA', 'LangGraph', 'MCP', 'FastAPI', 'Apollo Systems'].map((step) => (
+              <span key={step}>{step}</span>
+            ))}
+          </div>
           <SectionHeader
             eyebrow="Work"
             title="Featured Projects"
@@ -764,14 +1107,14 @@ function App() {
           />
           <div className="projects-grid">
             {projects.map((project) => (
-              <article className={`project-card reveal ${project.featured ? 'featured-project' : ''}`} key={project.title}>
+              <article
+                className={`project-card reveal ${project.featured ? 'featured-project' : ''}`}
+                key={project.title}
+                onPointerMove={tiltProjectCard}
+                onPointerLeave={resetProjectCard}
+              >
                 <div className="project-preview">
-                  <div className="preview-window">
-                    <div className="preview-dots"><span /><span /><span /></div>
-                    <div className="preview-lines">
-                      {project.lines.map((line, index) => <span className={line} key={`${line}-${index}`} />)}
-                    </div>
-                  </div>
+                  <ProjectVisual type={project.visual} />
                 </div>
                 <div className="project-content">
                   <div className="project-meta-row">
@@ -784,6 +1127,7 @@ function App() {
                   <div className="tag-list">
                     {project.stack.map((item) => <Tag key={item}>{item}</Tag>)}
                   </div>
+                  <FeatureStrip features={project.features} />
                 </div>
               </article>
             ))}
