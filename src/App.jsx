@@ -13,16 +13,54 @@ import {
   Menu,
   MessageSquare,
   Moon,
+  MoreHorizontal,
   Quote,
+  Rocket,
   Send,
   ShieldCheck,
   Sparkles,
   Sun,
   TerminalSquare,
+  Users,
   X,
 } from 'lucide-react'
+import {
+  SiPython,
+  SiFastapi,
+  SiReact,
+  SiVite,
+  SiLanggraph,
+  SiLangchain,
+  SiOpenai,
+  SiClaude,
+  SiModelcontextprotocol,
+  SiDocker,
+  SiPostgresql,
+  SiGithub,
+} from 'react-icons/si'
+import { FaAws } from 'react-icons/fa6'
 import kushwanthImage from './assets/kushwanth.png'
 import AvatarBadge from './components/AvatarBadge'
+
+const primaryTech = [
+  { name: 'Python', Icon: SiPython, color: '#FFD43B' },
+  { name: 'FastAPI', Icon: SiFastapi, color: '#05B6A2' },
+  { name: 'React', Icon: SiReact, color: '#61DAFB' },
+  { name: 'LangChain', Icon: SiLangchain, color: '#2ECC71' },
+  { name: 'LangGraph', Icon: SiLanggraph, color: '#A78BFA' },
+  { name: 'PostgreSQL', Icon: SiPostgresql, color: '#5B9BD5' },
+]
+
+const extraTech = [
+  { name: 'Vite', Icon: SiVite, color: '#A259FF' },
+  { name: 'OpenAI', Icon: SiOpenai, color: '#E5ECF6' },
+  { name: 'Claude', Icon: SiClaude, color: '#D97757' },
+  { name: 'ChatGPT', Icon: SiOpenai, color: '#74AA9C' },
+  { name: 'MCP', Icon: SiModelcontextprotocol, color: '#CBD7E8' },
+  { name: 'Docker', Icon: SiDocker, color: '#2496ED' },
+  { name: 'GitHub', Icon: SiGithub, color: '#E5ECF6' },
+  { name: 'AWS', Icon: FaAws, color: '#FF9900' },
+]
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -438,6 +476,7 @@ function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'dark')
   const [activeSection, setActiveSection] = useState('about')
   const [galleryFilter, setGalleryFilter] = useState('All')
+  const [techOpen, setTechOpen] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const currentIcon = useMemo(() => (theme === 'dark' ? Sun : Moon), [theme])
@@ -516,8 +555,11 @@ function App() {
 
       <header className="navbar">
         <a className="brand" href="#hero" onClick={() => setMenuOpen(false)}>
-          <AvatarBadge initials="KY" size={48} />
-          <span>Kushwanth Yantrapati</span>
+          <AvatarBadge initials="KY" size={46} />
+          <span className="brand-text">
+            <strong>Kushwanth Yantrapati</strong>
+            <small>AI Engineer</small>
+          </span>
         </a>
 
         <nav className={`nav-links ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
@@ -557,20 +599,14 @@ function App() {
       <main>
         <section id="hero" className="hero-section">
           <div className="hero-copy reveal">
-            <div className="availability">
-              <span />
-              BUILDING MULTI-AGENT HEALTHCARE AI SYSTEMS
-            </div>
             <div className="hero-pills">
-              <span><Sparkles size={14} /> AI Engineer</span>
-              <span><BrainCircuit size={14} /> LLM Systems</span>
-              <span><MapPin size={14} /> Hyderabad, India</span>
+              <span><span className="pill-dot" /> AI Engineer | Building Multi-Agent Healthcare AI Systems</span>
             </div>
             <h1>
-              Hi, I'm <span>Kushwanth</span>
+              Hi, I'm <span>Kushwanth Yantrapati</span>
             </h1>
-            <p>
-              AI Engineer specializing in Generative AI, LLMs, and Agentic systems, with experience in building scalable RAG pipelines, knowledge-driven applications, and secure APIs using Python, FastAPI, LangChain, and LangGraph.
+            <p className="hero-role">
+              AI Engineer specializing in Generative AI, LLMs, and Agentic systems. I build scalable RAG pipelines, intelligent agents, and production-grade AI applications.
             </p>
             <div className="hero-actions">
               <a className="primary-button" href="#projects">
@@ -579,13 +615,55 @@ function App() {
               </a>
               <a className="secondary-button" href="#contact">
                 <MessageSquare size={18} />
-                Get in Touch
+                Get In Touch
               </a>
             </div>
-            <div className="stat-grid">
-              <div><strong>3 yrs</strong><span>AI, ML and analytics experience</span></div>
-              <div><strong>4+</strong><span>Enterprise AI project builds</span></div>
-              <div><strong>15+</strong><span>Production-ready technologies</span></div>
+            <div className="hero-tech">
+              <span className="hero-tech-label">Trusted Technologies</span>
+              <div className="hero-tech-row">
+                {primaryTech.map(({ name, Icon, color }) => (
+                  <span
+                    className="tech-chip"
+                    key={name}
+                    title={name}
+                    aria-label={name}
+                    style={{ '--logo-color': color }}
+                  >
+                    <Icon className="tech-logo" aria-hidden="true" focusable="false" />
+                  </span>
+                ))}
+
+                <div
+                  className="tech-more"
+                  onMouseEnter={() => setTechOpen(true)}
+                  onMouseLeave={() => setTechOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className={`tech-chip tech-more-btn ${techOpen ? 'is-open' : ''}`}
+                    aria-label="Show more technologies"
+                    aria-expanded={techOpen}
+                    onClick={() => setTechOpen((open) => !open)}
+                  >
+                    <MoreHorizontal className="tech-logo" aria-hidden="true" focusable="false" />
+                  </button>
+
+                  <div className={`tech-popover ${techOpen ? 'is-open' : ''}`} role="menu">
+                    {extraTech.map(({ name, Icon, color }) => (
+                      <span
+                        className="tech-chip tech-chip-sm"
+                        key={name}
+                        title={name}
+                        aria-label={name}
+                        role="menuitem"
+                        style={{ '--logo-color': color }}
+                      >
+                        <Icon className="tech-logo" aria-hidden="true" focusable="false" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -596,6 +674,25 @@ function App() {
                 <div className="floating-chip chip-top">4+ <span>AI Projects</span></div>
                 <div className="floating-chip chip-right">15+ <span>Technologies</span></div>
               </div>
+            </div>
+          </div>
+
+          <div className="stat-bar reveal">
+            <div className="stat-item">
+              <span className="stat-icon"><Rocket size={20} /></span>
+              <div><strong>3+</strong><span>Years Experience</span></div>
+            </div>
+            <div className="stat-item">
+              <span className="stat-icon"><Code2 size={20} /></span>
+              <div><strong>4+</strong><span>Enterprise Projects</span></div>
+            </div>
+            <div className="stat-item">
+              <span className="stat-icon"><Users size={20} /></span>
+              <div><strong>2+</strong><span>Happy Clients</span></div>
+            </div>
+            <div className="stat-item">
+              <span className="stat-icon"><Sparkles size={20} /></span>
+              <div><strong>15+</strong><span>Technologies</span></div>
             </div>
           </div>
         </section>
