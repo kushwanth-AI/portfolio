@@ -49,6 +49,7 @@ import {
 import { FaAws } from 'react-icons/fa6'
 import kushwanthImage from './assets/kushwanth.png'
 import AvatarBadge from './components/AvatarBadge'
+import InteractiveNetworkBackground from './components/InteractiveNetworkBackground'
 
 const technologies = [
   { name: 'Python', Icon: SiPython, color: '#FFD43B' },
@@ -194,6 +195,36 @@ const projects = [
       { icon: Search, title: 'Intelligent Retrieval', text: 'Semantic search across enterprise data sources' },
       { icon: BrainCircuit, title: 'AI Agent Ready', text: 'Built for autonomous AI agents' },
       { icon: Server, title: 'Vector Database', text: 'Stacked retrieval and embedding pipeline' },
+    ],
+  },
+  {
+    status: 'Completed',
+    company: 'Indoor Intelligence',
+    category: 'Location AI POC',
+    title: 'Indoor Navigation POC',
+    description:
+      'Interactive indoor navigation proof of concept with floor-level wayfinding, route guidance, animated location tracking, and navigation UI patterns for complex hospital or enterprise spaces.',
+    stack: ['React', 'Indoor Maps', 'Wayfinding', 'Location UX', 'Routing', 'POC'],
+    visual: 'indoor',
+    features: [
+      { icon: Navigation, title: 'Route Guidance', text: 'Moving path, destination pulse, and floor context' },
+      { icon: MapPin, title: 'Live Positioning', text: 'Location pin and direction state for indoor movement' },
+      { icon: Layers3, title: 'Floor Map UI', text: '3D-style map surface for spatial workflows' },
+    ],
+  },
+  {
+    status: 'Completed',
+    company: 'Indoor Intelligence',
+    category: 'BLE Tracking POC',
+    title: 'BLE Beacon POC',
+    description:
+      'Bluetooth Low Energy beacon concept for realtime proximity tracking, expanding signal visualization, and location-aware operational flows across indoor environments.',
+    stack: ['BLE', 'Bluetooth', 'Realtime Tracking', 'Proximity', 'IoT', 'React'],
+    visual: 'ble',
+    features: [
+      { icon: Radio, title: 'Signal Field', text: 'Expanding beacon rings and tracking particles' },
+      { icon: MapPin, title: 'Proximity Logic', text: 'Realtime distance and indoor positioning states' },
+      { icon: Database, title: 'Telemetry Ready', text: 'Event streams for analytics and operations' },
     ],
   },
   {
@@ -530,6 +561,10 @@ function ProjectVisual({ type = 'agents' }) {
             <span>Doctor</span>
             <span>Booking</span>
           </div>
+          <div className="medical-ui-float">
+            <span><HeartPulse size={14} /> Vitals</span>
+            <span><CalendarDays size={14} /> Slot</span>
+          </div>
           <i className="workflow-beam beam-one" />
           <i className="workflow-beam beam-two" />
         </>
@@ -542,6 +577,7 @@ function ProjectVisual({ type = 'agents' }) {
             <span className="map-room room-two" />
             <span className="map-room room-three" />
             <i className="route-path" />
+            <i className="route-path route-path-glow" />
             <span className="route-dot start-dot" />
             <span className="route-dot destination-dot" />
             <Navigation className="nav-arrow" size={34} />
@@ -563,6 +599,11 @@ function ProjectVisual({ type = 'agents' }) {
           <span className="signal-ring signal-one" />
           <span className="signal-ring signal-two" />
           <span className="signal-ring signal-three" />
+          <div className="tracking-dots">
+            <span />
+            <span />
+            <span />
+          </div>
           <div className="ble-metrics">
             <span>Realtime Tracking</span>
             <span>Proximity Detection</span>
@@ -591,6 +632,11 @@ function ProjectVisual({ type = 'agents' }) {
             <i className="graph-edge edge-three" />
             <i className="graph-edge edge-four" />
           </div>
+          <div className="sql-stream">
+            <span />
+            <span />
+            <span />
+          </div>
         </>
       )}
 
@@ -611,6 +657,9 @@ function ProjectVisual({ type = 'agents' }) {
           <i className="flow-line line-left" />
           <i className="flow-line line-center" />
           <i className="flow-line line-right" />
+          <span className="retrieval-particle particle-a" />
+          <span className="retrieval-particle particle-b" />
+          <span className="retrieval-particle particle-c" />
         </>
       )}
 
@@ -658,6 +707,9 @@ function ProjectVisual({ type = 'agents' }) {
             <span />
             <span />
           </div>
+          <svg className="prediction-graph" viewBox="0 0 190 82" aria-hidden="true">
+            <path d="M6 70 C 38 54, 48 62, 78 38 S 132 16, 184 12" />
+          </svg>
           <div className="kpi-row">
             <span><strong>2.45M</strong><small>Revenue</small></span>
             <span><strong>18.4K</strong><small>Patients</small></span>
@@ -665,6 +717,60 @@ function ProjectVisual({ type = 'agents' }) {
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+function ParticleBurst() {
+  const rays = Array.from({ length: 54 }, (_, index) => {
+    const progress = index / 53
+    const angle = -76 + progress * 152
+    const length = 150 + ((index * 29) % 150)
+    const delay = `${(index % 12) * -0.18}s`
+    const color = ['#635BFF', '#7C3AED', '#EC4899', '#F59E0B', '#00D4FF'][index % 5]
+
+    return (
+      <span
+        className="burst-ray"
+        key={`ray-${index}`}
+        style={{
+          '--angle': `${angle}deg`,
+          '--length': `${length}px`,
+          '--delay': delay,
+          '--burst-color': color,
+        }}
+      />
+    )
+  })
+
+  const dots = Array.from({ length: 46 }, (_, index) => {
+    const progress = index / 45
+    const angle = -70 + progress * 140
+    const distance = 84 + ((index * 41) % 250)
+    const size = 4 + (index % 4)
+    const delay = `${(index % 10) * -0.22}s`
+    const color = ['#00D4FF', '#635BFF', '#EC4899', '#F59E0B', '#7C3AED'][index % 5]
+
+    return (
+      <span
+        className="burst-dot"
+        key={`dot-${index}`}
+        style={{
+          '--angle': `${angle}deg`,
+          '--distance': `${distance}px`,
+          '--dot-size': `${size}px`,
+          '--delay': delay,
+          '--burst-color': color,
+        }}
+      />
+    )
+  })
+
+  return (
+    <div className="particle-burst reveal" aria-hidden="true">
+      <div className="burst-core" />
+      <div className="burst-rays">{rays}</div>
+      <div className="burst-dots">{dots}</div>
     </div>
   )
 }
@@ -758,6 +864,8 @@ function App() {
       current.y += (cursor.y - current.y) * 0.14
       projectSection.style.setProperty('--cursor-x', `${current.x}%`)
       projectSection.style.setProperty('--cursor-y', `${current.y}%`)
+      projectSection.style.setProperty('--cursor-shift-x', `${((current.x - 50) * 0.18).toFixed(2)}px`)
+      projectSection.style.setProperty('--cursor-shift-y', `${((current.y - 50) * 0.18).toFixed(2)}px`)
       frame = requestAnimationFrame(renderCursor)
     }
 
@@ -833,6 +941,7 @@ function App() {
 
   return (
     <div className="site-shell">
+      <InteractiveNetworkBackground />
       <div className="noise-layer" />
       <div className="stripe-gradient">
         <span className="stripe-band band-one" />
@@ -843,7 +952,7 @@ function App() {
 
       <header className="navbar">
         <a className="brand" href="#hero" onClick={() => setMenuOpen(false)}>
-          <AvatarBadge initials="KY" size={46} />
+          <AvatarBadge initials="KY" imageSrc={kushwanthImage} size={46} title="Kushwanth Yantrapati" />
           <span className="brand-text">
             <strong>Kushwanth Yantrapati</strong>
             <small>AI Engineer</small>
@@ -1105,6 +1214,7 @@ function App() {
             title="Featured Projects"
             description="Enterprise AI systems designed to simplify how users interact with data, knowledge, and enterprise platforms."
           />
+          <ParticleBurst />
           <div className="projects-grid">
             {projects.map((project) => (
               <article

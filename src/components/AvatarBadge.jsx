@@ -1,10 +1,11 @@
 /**
  * AvatarBadge
- * Reusable circular avatar badge with initials, gradient background, glow ring,
+ * Reusable circular avatar badge with initials or an image, gradient background, glow ring,
  * and glassmorphism styling. Used for portfolio branding and testimonial-style profile chips.
  *
  * Props:
  *  - initials: string (required)  e.g. "KY"
+ *  - imageSrc: string (optional) photo URL/source to show instead of initials
  *  - size:     number  (optional) pixel size of the badge. Default 48.
  *  - variant:  string  (optional) 'primary' | 'mint'. Default 'primary'.
  *      'primary' -> cyan-to-blue gradient with white initials (brand badge)
@@ -14,6 +15,7 @@
  */
 function AvatarBadge({
   initials,
+  imageSrc,
   size = 48,
   variant = 'primary',
   className = '',
@@ -38,7 +40,11 @@ function AvatarBadge({
       role="img"
       aria-label={label}
     >
-      <span className="avatar-badge__text">{safeInitials}</span>
+      {imageSrc ? (
+        <img className="avatar-badge__image" src={imageSrc} alt="" aria-hidden="true" />
+      ) : (
+        <span className="avatar-badge__text">{safeInitials}</span>
+      )}
     </span>
   )
 }

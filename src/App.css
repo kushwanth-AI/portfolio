@@ -98,6 +98,22 @@ img {
   padding: 18px clamp(16px, 4vw, 48px) 44px;
 }
 
+.interactive-network-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0.34;
+  mix-blend-mode: screen;
+}
+
+[data-theme="light"] .interactive-network-bg {
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+}
+
 .noise-layer {
   position: fixed;
   inset: 0;
@@ -1208,6 +1224,8 @@ p {
 .project-lab {
   --cursor-x: 50%;
   --cursor-y: 28%;
+  --cursor-shift-x: 0px;
+  --cursor-shift-y: 0px;
   overflow: hidden;
 }
 
@@ -1319,6 +1337,84 @@ p {
   content: "";
 }
 
+.particle-burst {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 980px);
+  height: 320px;
+  margin: -8px auto 28px;
+  overflow: hidden;
+  border: 1px solid rgba(99, 91, 255, 0.18);
+  border-radius: 8px;
+  background:
+    radial-gradient(ellipse at calc(var(--cursor-x) * 1) 100%, rgba(0, 212, 255, 0.18), transparent 36%),
+    radial-gradient(ellipse at 50% 100%, rgba(99, 91, 255, 0.24), transparent 42%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.12), rgba(8, 13, 30, 0.42));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+[data-theme="light"] .particle-burst {
+  background:
+    radial-gradient(ellipse at calc(var(--cursor-x) * 1) 100%, rgba(0, 212, 255, 0.18), transparent 36%),
+    radial-gradient(ellipse at 50% 100%, rgba(99, 91, 255, 0.2), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(10, 37, 64, 0.12));
+}
+
+.burst-core {
+  position: absolute;
+  left: 50%;
+  bottom: -190px;
+  width: min(680px, 96vw);
+  height: min(680px, 96vw);
+  border: 1px solid rgba(0, 212, 255, 0.18);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.22), transparent 12%),
+    conic-gradient(from 210deg, rgba(99, 91, 255, 0.12), rgba(0, 212, 255, 0.22), rgba(236, 72, 153, 0.2), rgba(245, 158, 11, 0.16), rgba(99, 91, 255, 0.12));
+  filter: saturate(1.2);
+  transform: translateX(-50%);
+  animation: burstCoreDrift 11s ease-in-out infinite alternate;
+}
+
+.burst-rays,
+.burst-dots {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(var(--cursor-shift-x), var(--cursor-shift-y), 0);
+}
+
+.burst-ray,
+.burst-dot {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  display: block;
+  transform-origin: 0 100%;
+}
+
+.burst-ray {
+  width: var(--length);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--burst-color), rgba(255, 255, 255, 0));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--burst-color), transparent 48%);
+  opacity: 0.48;
+  transform: rotate(var(--angle));
+  animation: burstRayPulse 4.8s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.burst-dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 999px;
+  background: var(--burst-color);
+  box-shadow: 0 0 18px var(--burst-color), 0 0 36px color-mix(in srgb, var(--burst-color), transparent 60%);
+  transform: rotate(var(--angle)) translateX(var(--distance));
+  animation: burstDotFloat 5.8s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
 .project-card {
   position: relative;
   overflow: hidden;
@@ -1390,6 +1486,15 @@ p {
     0 0 48px rgba(99, 91, 255, 0.16);
 }
 
+.project-card:hover .architecture-visual {
+  transform: translateZ(34px) scale(1.035);
+}
+
+.project-card:hover .project-preview::before {
+  opacity: 0.72;
+  transform: scale(1.04);
+}
+
 .project-card:hover::before,
 .project-card:hover::after {
   opacity: 1;
@@ -1428,6 +1533,7 @@ p {
   background-size: 36px 36px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 88%);
   opacity: 0.48;
+  transition: opacity 0.35s ease, transform 0.35s var(--ease);
 }
 
 .project-preview::after {
@@ -1457,6 +1563,7 @@ p {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
   transform: translateZ(0);
+  transition: transform 0.35s var(--ease);
 }
 
 .featured-project .architecture-visual {
@@ -1512,10 +1619,14 @@ p {
 .assistant-avatar,
 .chat-workflow,
 .workflow-beam,
+.medical-ui-float,
 .floor-map,
 .nav-phone,
 .beacon-device,
 .signal-ring,
+.tracking-dots,
+.sql-stream,
+.retrieval-particle,
 .ble-metrics,
 .agent-orbit,
 .agent-stack,
@@ -1523,7 +1634,8 @@ p {
 .sensor-cluster,
 .analytics-board,
 .kpi-row,
-.insight-card {
+.insight-card,
+.prediction-graph {
   position: absolute;
   z-index: 1;
 }
@@ -1613,6 +1725,45 @@ p {
   width: 136px;
 }
 
+.chat-workflow span {
+  animation: chatBubbleFloat 4.6s ease-in-out infinite alternate;
+}
+
+.chat-workflow span:nth-child(2) {
+  animation-delay: -1.4s;
+}
+
+.chat-workflow span:nth-child(3) {
+  animation-delay: -2.6s;
+}
+
+.medical-ui-float {
+  left: 30px;
+  bottom: 38px;
+  display: grid;
+  gap: 8px;
+}
+
+.medical-ui-float span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding: 9px 11px;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  border-radius: 999px;
+  color: #dbeafe;
+  background: rgba(15, 23, 42, 0.62);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.14);
+  font-size: 0.7rem;
+  font-weight: 850;
+  animation: uiChipDrift 4.8s ease-in-out infinite alternate;
+}
+
+.medical-ui-float span:nth-child(2) {
+  animation-delay: -2s;
+}
+
 .chat-workflow span,
 .ble-metrics span,
 .nav-phone {
@@ -1676,6 +1827,15 @@ p {
   background: #38bdf8;
   box-shadow: 0 0 18px rgba(56, 189, 248, 0.9);
   transform: rotate(-28deg);
+  animation: routeGrow 3.2s ease-in-out infinite;
+}
+
+.route-path-glow {
+  height: 10px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.86), transparent);
+  filter: blur(5px);
+  opacity: 0.7;
+  animation-delay: -1.2s;
 }
 
 .route-dot {
@@ -1701,6 +1861,7 @@ p {
   top: 86px;
   color: #dbeafe;
   filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.9));
+  animation: navArrowPulse 2.2s ease-in-out infinite;
 }
 
 .nav-phone {
@@ -1736,6 +1897,7 @@ p {
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.28), transparent 22%),
     linear-gradient(180deg, rgba(191, 219, 254, 0.9), rgba(99, 91, 255, 0.34));
   box-shadow: 0 0 52px rgba(99, 91, 255, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  animation: beaconLift 3.8s ease-in-out infinite alternate;
 }
 
 .beacon-device span {
@@ -1774,6 +1936,24 @@ p {
   width: 180px;
 }
 
+.tracking-dots {
+  inset: 0;
+}
+
+.tracking-dots span {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #00d4ff;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.9);
+  animation: trackingDotMove 5.2s ease-in-out infinite;
+}
+
+.tracking-dots span:nth-child(1) { top: 66px; right: 86px; }
+.tracking-dots span:nth-child(2) { top: 148px; right: 122px; animation-delay: -1.6s; }
+.tracking-dots span:nth-child(3) { bottom: 62px; right: 62px; animation-delay: -3s; }
+
 .ai-panel {
   top: 42px;
   right: 40px;
@@ -1802,6 +1982,13 @@ p {
 .ai-panel span:nth-child(3) {
   width: 76%;
 }
+
+.ai-panel span {
+  animation: codeLineScan 2.8s ease-in-out infinite alternate;
+}
+
+.ai-panel span:nth-child(2) { animation-delay: -0.8s; }
+.ai-panel span:nth-child(3) { animation-delay: -1.6s; }
 
 .db-cylinder {
   bottom: 72px;
@@ -1860,6 +2047,7 @@ p {
 .graph-node {
   width: 28px;
   height: 28px;
+  animation: graphNodePulse 3.4s ease-in-out infinite alternate;
 }
 
 .node-1 { top: 12px; left: 80px; }
@@ -1883,6 +2071,24 @@ p {
 .edge-two { top: 66px; left: 60px; width: 98px; transform: rotate(14deg); }
 .edge-three { top: 88px; left: 72px; width: 72px; transform: rotate(45deg); }
 .edge-four { top: 104px; left: 74px; width: 82px; transform: rotate(-20deg); }
+
+.sql-stream {
+  inset: 0;
+}
+
+.sql-stream span {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #00d4ff;
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.88);
+  animation: sqlParticle 3s linear infinite;
+}
+
+.sql-stream span:nth-child(1) { left: 54%; top: 46%; }
+.sql-stream span:nth-child(2) { left: 62%; top: 54%; animation-delay: -1s; }
+.sql-stream span:nth-child(3) { left: 48%; top: 60%; animation-delay: -2s; }
 
 .cloud-core {
   top: 42px;
@@ -1922,11 +2128,12 @@ p {
   color: #dbeafe;
   background: linear-gradient(180deg, rgba(37, 99, 235, 0.52), rgba(17, 24, 60, 0.86));
   box-shadow: 0 0 26px rgba(37, 99, 235, 0.42);
+  animation: ragNodeFloat 4.2s ease-in-out infinite alternate;
 }
 
 .doc-node { left: 48px; bottom: 112px; }
-.code-node { right: 52px; bottom: 112px; }
-.chat-node { right: 36px; bottom: 46px; }
+.code-node { right: 52px; bottom: 112px; animation-delay: -1.4s; }
+.chat-node { right: 36px; bottom: 46px; animation-delay: -2.6s; }
 
 .vector-stack {
   left: 50%;
@@ -1955,6 +2162,19 @@ p {
 .line-left { left: 94px; top: 134px; width: 88px; transform: rotate(92deg); }
 .line-center { left: 50%; top: 124px; width: 72px; transform: rotate(90deg); }
 .line-right { right: 92px; top: 136px; width: 84px; transform: rotate(88deg); }
+
+.retrieval-particle {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #00d4ff;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.9);
+  animation: retrievalDrop 2.8s linear infinite;
+}
+
+.particle-a { left: 112px; top: 142px; }
+.particle-b { left: 50%; top: 132px; animation-delay: -0.9s; }
+.particle-c { right: 110px; top: 144px; animation-delay: -1.8s; }
 
 .agent-orbit {
   top: 48px;
@@ -2015,6 +2235,8 @@ p {
   height: 3px;
   background: linear-gradient(90deg, #38bdf8 0 18%, transparent 18% 26%, #a78bfa 26% 34%, transparent 34% 42%, #38bdf8 42% 100%);
   box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+  background-size: 220% 100%;
+  animation: pulseLineMove 2.4s linear infinite;
 }
 
 .pulse-dot {
@@ -2066,7 +2288,12 @@ p {
   border-radius: 999px 999px 0 0;
   background: linear-gradient(180deg, #a78bfa, #38bdf8);
   box-shadow: 0 0 18px rgba(56, 189, 248, 0.42);
+  animation: chartBarLift 4.4s ease-in-out infinite alternate;
 }
+
+.analytics-board span:nth-child(2) { animation-delay: -1s; }
+.analytics-board span:nth-child(3) { animation-delay: -2s; }
+.analytics-board span:nth-child(4) { animation-delay: -3s; }
 
 .insight-card {
   top: 44px;
@@ -2121,6 +2348,28 @@ p {
   font-weight: 800;
 }
 
+.prediction-graph {
+  left: 58px;
+  right: 58px;
+  bottom: 78px;
+  width: calc(100% - 116px);
+  height: 90px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.prediction-graph path {
+  fill: none;
+  stroke: url("#prediction-gradient");
+  stroke: #f59e0b;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.78));
+  animation: graphDraw 4s ease-in-out infinite;
+}
+
 .project-feature-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2173,6 +2422,21 @@ p {
   to { transform: translate3d(18px, -12px, 0) scale(1.08); opacity: 0.68; }
 }
 
+@keyframes burstCoreDrift {
+  from { transform: translateX(-50%) rotate(-4deg) scale(1); opacity: 0.82; }
+  to { transform: translateX(-50%) rotate(5deg) scale(1.04); opacity: 1; }
+}
+
+@keyframes burstRayPulse {
+  0%, 100% { opacity: 0.18; transform: rotate(var(--angle)) scaleX(0.74); }
+  50% { opacity: 0.68; transform: rotate(var(--angle)) scaleX(1.04); }
+}
+
+@keyframes burstDotFloat {
+  0%, 100% { opacity: 0.42; transform: rotate(var(--angle)) translateX(calc(var(--distance) * 0.92)) scale(0.84); }
+  50% { opacity: 1; transform: rotate(var(--angle)) translateX(var(--distance)) scale(1.12); }
+}
+
 @keyframes orbitFloat {
   from { transform: translateX(-50%) translateY(0); }
   to { transform: translateX(-50%) translateY(-10px); }
@@ -2199,8 +2463,84 @@ p {
 }
 
 @keyframes dataFlow {
-  from { background-position: -120px 0; }
-  to { background-position: 120px 0; }
+  from { background-position: -120px 0; transform: translateX(0) rotate(var(--beam-rotate, 0deg)); }
+  to { background-position: 120px 0; transform: translateX(10px) rotate(var(--beam-rotate, 0deg)); }
+}
+
+.beam-one { --beam-rotate: 14deg; }
+.beam-two { --beam-rotate: -16deg; }
+
+@keyframes chatBubbleFloat {
+  from { transform: translate3d(-4px, 0, 0); }
+  to { transform: translate3d(6px, -8px, 0); }
+}
+
+@keyframes uiChipDrift {
+  from { transform: translate3d(0, 0, 0); opacity: 0.68; }
+  to { transform: translate3d(12px, -8px, 0); opacity: 1; }
+}
+
+@keyframes routeGrow {
+  0%, 100% { clip-path: inset(0 100% 0 0); opacity: 0.46; }
+  50% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+@keyframes navArrowPulse {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(10px, -8px, 0) rotate(8deg); }
+}
+
+@keyframes beaconLift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+@keyframes trackingDotMove {
+  0%, 100% { transform: translate3d(-10px, 8px, 0) scale(0.8); opacity: 0.42; }
+  50% { transform: translate3d(18px, -14px, 0) scale(1.2); opacity: 1; }
+}
+
+@keyframes codeLineScan {
+  from { opacity: 0.38; transform: scaleX(0.72); transform-origin: left; }
+  to { opacity: 1; transform: scaleX(1); transform-origin: left; }
+}
+
+@keyframes graphNodePulse {
+  from { transform: scale(0.88); opacity: 0.72; }
+  to { transform: scale(1.12); opacity: 1; }
+}
+
+@keyframes sqlParticle {
+  from { transform: translate3d(96px, -42px, 0) scale(0.8); opacity: 0; }
+  18% { opacity: 1; }
+  to { transform: translate3d(-180px, 66px, 0) scale(1.1); opacity: 0; }
+}
+
+@keyframes ragNodeFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-9px); }
+}
+
+@keyframes retrievalDrop {
+  from { transform: translate3d(0, -18px, 0); opacity: 0; }
+  30% { opacity: 1; }
+  to { transform: translate3d(0, 90px, 0); opacity: 0; }
+}
+
+@keyframes pulseLineMove {
+  from { background-position: 0% 50%; }
+  to { background-position: 220% 50%; }
+}
+
+@keyframes chartBarLift {
+  from { transform: scaleY(0.78); transform-origin: bottom; }
+  to { transform: scaleY(1.05); transform-origin: bottom; }
+}
+
+@keyframes graphDraw {
+  0% { stroke-dashoffset: 260; opacity: 0.2; }
+  45%, 72% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -260; opacity: 0.2; }
 }
 
 @keyframes destinationPulse {
@@ -2664,12 +3004,20 @@ footer span {
   line-height: 1;
   background: linear-gradient(135deg, var(--blue), var(--cyan));
   box-shadow: 0 10px 24px rgba(99, 91, 255, 0.26);
+  overflow: hidden;
   user-select: none;
 }
 
 .avatar-badge__text {
   position: relative;
   z-index: 1;
+}
+
+.avatar-badge__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 26%;
 }
 
 .avatar-badge--mint {
