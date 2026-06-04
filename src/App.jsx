@@ -947,8 +947,8 @@ function App() {
 
                 <div className="metric-grid">
                   <div className="metric-card main-metric">
-                    <span>Resolved intents</span>
-                    <strong>2,418</strong>
+                    <span>Agent Workflows</span>
+                    <strong>15+</strong>
                     <small>+31.8% this sprint</small>
                   </div>
                   <div className="metric-card">

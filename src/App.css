@@ -424,7 +424,8 @@ p {
   font-size: clamp(2.6rem, 7.1vw, 6.45rem);
   line-height: 0.94;
   letter-spacing: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .hero-copy h1 span {
@@ -3264,7 +3265,7 @@ footer span {
 
   .hero-section {
     gap: 28px;
-    padding: 34px 0 0;
+    padding: 28px 0 0;
   }
 
   .hero-copy {
@@ -3337,7 +3338,7 @@ footer span {
 
   .hero-visual,
   .product-stack {
-    min-height: 560px;
+    min-height: 520px;
   }
 
   .dashboard-card {
@@ -3357,7 +3358,7 @@ footer span {
   }
 
   .content-section {
-    padding: 56px 0 0;
+    padding: 52px 0 0;
     scroll-margin-top: 96px;
   }
 
@@ -3422,8 +3423,9 @@ footer span {
   }
 
   .brand-text strong {
-    max-width: 118px;
-    font-size: 0.8rem;
+    max-width: clamp(132px, 40vw, 172px);
+    font-size: 0.78rem;
+    line-height: 1.1;
   }
 
   .brand-text small {
@@ -3435,7 +3437,7 @@ footer span {
   }
 
   .hero-section {
-    padding-top: 28px;
+    padding-top: 22px;
   }
 
   .hero-copy h1 {
@@ -3452,7 +3454,7 @@ footer span {
 
   .hero-visual,
   .product-stack {
-    min-height: 500px;
+    min-height: 460px;
   }
 
   .dashboard-top {
