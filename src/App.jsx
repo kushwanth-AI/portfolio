@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowUpRight,
   BarChart3,
@@ -19,6 +19,7 @@ import {
   Menu,
   MessageSquare,
   Moon,
+  Palette,
   Quote,
   Radio,
   Rocket,
@@ -50,6 +51,8 @@ import { FaAws } from 'react-icons/fa6'
 import kushwanthImage from './assets/kushwanth.png'
 import AvatarBadge from './components/AvatarBadge'
 import InteractiveNetworkBackground from './components/InteractiveNetworkBackground'
+import InteractiveStripeVisualization, { VIZ_THEMES } from './components/InteractiveStripeVisualization'
+import MouseGlowBackground from './components/MouseGlowBackground'
 
 const technologies = [
   { name: 'Python', Icon: SiPython, color: '#FFD43B' },
@@ -200,31 +203,16 @@ const projects = [
   {
     status: 'Completed',
     company: 'Indoor Intelligence',
-    category: 'Location AI POC',
-    title: 'Indoor Navigation POC',
+    category: 'Location Intelligence POC',
+    title: 'Indoor Navigation & BLE Beacon POC',
     description:
-      'Interactive indoor navigation proof of concept with floor-level wayfinding, route guidance, animated location tracking, and navigation UI patterns for complex hospital or enterprise spaces.',
-    stack: ['React', 'Indoor Maps', 'Wayfinding', 'Location UX', 'Routing', 'POC'],
+      'Interactive indoor navigation and BLE beacon-based proximity tracking proof of concept with floor-level wayfinding, route guidance, animated location tracking, signal visualization, and location-aware operational flows for hospitals and enterprise spaces.',
+    stack: ['React', 'Indoor Maps', 'Wayfinding', 'BLE', 'Bluetooth', 'Realtime Tracking', 'Proximity', 'IoT', 'POC'],
     visual: 'indoor',
     features: [
-      { icon: Navigation, title: 'Route Guidance', text: 'Moving path, destination pulse, and floor context' },
-      { icon: MapPin, title: 'Live Positioning', text: 'Location pin and direction state for indoor movement' },
-      { icon: Layers3, title: 'Floor Map UI', text: '3D-style map surface for spatial workflows' },
-    ],
-  },
-  {
-    status: 'Completed',
-    company: 'Indoor Intelligence',
-    category: 'BLE Tracking POC',
-    title: 'BLE Beacon POC',
-    description:
-      'Bluetooth Low Energy beacon concept for realtime proximity tracking, expanding signal visualization, and location-aware operational flows across indoor environments.',
-    stack: ['BLE', 'Bluetooth', 'Realtime Tracking', 'Proximity', 'IoT', 'React'],
-    visual: 'ble',
-    features: [
-      { icon: Radio, title: 'Signal Field', text: 'Expanding beacon rings and tracking particles' },
-      { icon: MapPin, title: 'Proximity Logic', text: 'Realtime distance and indoor positioning states' },
-      { icon: Database, title: 'Telemetry Ready', text: 'Event streams for analytics and operations' },
+      { icon: Navigation, title: 'Route Guidance', text: 'Moving path, destination pulse, and floor-level context' },
+      { icon: Radio, title: 'BLE Proximity', text: 'Expanding beacon rings and realtime indoor tracking' },
+      { icon: MapPin, title: 'Location Intelligence', text: 'Combined wayfinding and proximity for enterprise spaces' },
     ],
   },
   {
@@ -721,60 +709,6 @@ function ProjectVisual({ type = 'agents' }) {
   )
 }
 
-function ParticleBurst() {
-  const rays = Array.from({ length: 54 }, (_, index) => {
-    const progress = index / 53
-    const angle = -76 + progress * 152
-    const length = 150 + ((index * 29) % 150)
-    const delay = `${(index % 12) * -0.18}s`
-    const color = ['#635BFF', '#7C3AED', '#EC4899', '#F59E0B', '#00D4FF'][index % 5]
-
-    return (
-      <span
-        className="burst-ray"
-        key={`ray-${index}`}
-        style={{
-          '--angle': `${angle}deg`,
-          '--length': `${length}px`,
-          '--delay': delay,
-          '--burst-color': color,
-        }}
-      />
-    )
-  })
-
-  const dots = Array.from({ length: 46 }, (_, index) => {
-    const progress = index / 45
-    const angle = -70 + progress * 140
-    const distance = 84 + ((index * 41) % 250)
-    const size = 4 + (index % 4)
-    const delay = `${(index % 10) * -0.22}s`
-    const color = ['#00D4FF', '#635BFF', '#EC4899', '#F59E0B', '#7C3AED'][index % 5]
-
-    return (
-      <span
-        className="burst-dot"
-        key={`dot-${index}`}
-        style={{
-          '--angle': `${angle}deg`,
-          '--distance': `${distance}px`,
-          '--dot-size': `${size}px`,
-          '--delay': delay,
-          '--burst-color': color,
-        }}
-      />
-    )
-  })
-
-  return (
-    <div className="particle-burst reveal" aria-hidden="true">
-      <div className="burst-core" />
-      <div className="burst-rays">{rays}</div>
-      <div className="burst-dots">{dots}</div>
-    </div>
-  )
-}
-
 function FeatureStrip({ features = [] }) {
   if (!features.length) return null
 
@@ -799,6 +733,9 @@ function App() {
   const [activeSection, setActiveSection] = useState('about')
   const [galleryFilter, setGalleryFilter] = useState('All')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [vizTheme, setVizTheme] = useState(() => localStorage.getItem('viz-theme') || 'stripe')
+  const [showVizPicker, setShowVizPicker] = useState(false)
+  const vizPickerRef = useRef(null)
 
   const currentIcon = useMemo(() => (theme === 'dark' ? Sun : Moon), [theme])
   const ThemeIcon = currentIcon
@@ -811,6 +748,21 @@ function App() {
     document.documentElement.dataset.theme = theme
     localStorage.setItem('portfolio-theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    localStorage.setItem('viz-theme', vizTheme)
+  }, [vizTheme])
+
+  useEffect(() => {
+    if (!showVizPicker) return undefined
+    function closeOnOutside(e) {
+      if (vizPickerRef.current && !vizPickerRef.current.contains(e.target)) {
+        setShowVizPicker(false)
+      }
+    }
+    document.addEventListener('mousedown', closeOnOutside)
+    return () => document.removeEventListener('mousedown', closeOnOutside)
+  }, [showVizPicker])
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('.reveal')
@@ -1195,6 +1147,7 @@ function App() {
         </section>
 
         <section id="projects" className="content-section project-lab">
+          <MouseGlowBackground />
           <div className="project-mesh" aria-hidden="true">
             <span className="mesh-node node-a" />
             <span className="mesh-node node-b" />
@@ -1204,17 +1157,53 @@ function App() {
             <span className="mesh-link link-b" />
             <span className="mesh-link link-c" />
           </div>
-          <div className="project-workflow" aria-hidden="true">
-            {['User', 'Apollo ARIA', 'LangGraph', 'MCP', 'FastAPI', 'Apollo Systems'].map((step) => (
-              <span key={step}>{step}</span>
-            ))}
-          </div>
           <SectionHeader
             eyebrow="Work"
             title="Featured Projects"
             description="Enterprise AI systems designed to simplify how users interact with data, knowledge, and enterprise platforms."
           />
-          <ParticleBurst />
+          <div className="project-hero-wrap">
+            <InteractiveStripeVisualization themeKey={vizTheme} />
+            <div className="project-workflow" aria-hidden="true">
+              {['User', 'Apollo ARIA', 'LangGraph', 'MCP', 'FastAPI', 'Apollo Systems'].map((step) => (
+                <span key={step}>{step}</span>
+              ))}
+            </div>
+            <div className="viz-theme-picker" ref={vizPickerRef}>
+              <button
+                className="viz-theme-btn"
+                type="button"
+                aria-label="Change visualization theme"
+                aria-expanded={showVizPicker}
+                onClick={() => setShowVizPicker((p) => !p)}
+              >
+                <Palette size={15} />
+                <span>Theme</span>
+              </button>
+              {showVizPicker && (
+                <div className="viz-theme-panel" role="menu">
+                  <div className="viz-panel-label">Visualization</div>
+                  {Object.entries(VIZ_THEMES).map(([key, t]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      role="menuitem"
+                      className={`viz-theme-option ${vizTheme === key ? 'is-active' : ''}`}
+                      onClick={() => { setVizTheme(key); setShowVizPicker(false) }}
+                    >
+                      <span className="viz-swatches">
+                        {t.swatches.map((s) => (
+                          <span key={s} className="viz-swatch" style={{ background: s }} />
+                        ))}
+                      </span>
+                      <span className="viz-option-label">{t.label}</span>
+                      {vizTheme === key && <span className="viz-check">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           <div className="projects-grid">
             {projects.map((project) => (
               <article
